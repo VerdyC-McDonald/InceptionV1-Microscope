@@ -1,0 +1,163 @@
+{
+  "checked_at": "2026-10-23",
+  "layer_files": [
+    {
+      "path": "data/conv2d0.json",
+      "channels": 64,
+      "sha256": "efad8d0d85e8bb7205b1a39c91bf88b8ad76db92beda1580a75943851e7ad98b"
+    },
+    {
+      "path": "data/conv2d1.json",
+      "channels": 64,
+      "sha256": "3942a69f98deed1b02803c3c08cc52c2e299773e56ecb82e4331d38ed37e3d51"
+    },
+    {
+      "path": "data/conv2d2.json",
+      "channels": 192,
+      "sha256": "b11ccc685a8458b6cce51cb7702fd11045fcb9e6bddae7b22a4d840e9860558d"
+    },
+    {
+      "path": "data/mixed3a.json",
+      "channels": 256,
+      "sha256": "746d686e583588374477eebadf7c402e5a83f82d1c87c995d279da712213171f"
+    },
+    {
+      "path": "data/mixed3b.json",
+      "channels": 480,
+      "sha256": "d16dd002ff5fb40245253a72cad3747a7a25400a5e7fd27be2d89214b06ef86e"
+    },
+    {
+      "path": "data/mixed4a.json",
+      "channels": 508,
+      "sha256": "206be5455426b70fb2b4bbddffad0755aa09c493a71c4ace486d2bb6f2507274"
+    },
+    {
+      "path": "data/mixed4b.json",
+      "channels": 512,
+      "sha256": "cd7711c63b9f13e6547ba420f2bbeeef52aad1a52ec74c5245b72f829aeb0b40"
+    },
+    {
+      "path": "data/mixed4c.json",
+      "channels": 512,
+      "sha256": "ea16d7fab57d26da179aa3abe62e633c0cd612c6d6918d31361f29eed92608fe"
+    },
+    {
+      "path": "data/mixed4d.json",
+      "channels": 528,
+      "sha256": "6b7d63991ab76ab8da492dbdecc9ad20543301e4d9d44c61449701f1949a2d73"
+    },
+    {
+      "path": "data/mixed4e.json",
+      "channels": 832,
+      "sha256": "a4c36918cf0c6da88d689c71eb93a7bde27afef568fde3b2da8c4469dc55b729"
+    },
+    {
+      "path": "data/mixed5a.json",
+      "channels": 832,
+      "sha256": "95d27fa051006a97d5e4306940c99116e8dc81ede54d7f1973507518f4663112"
+    },
+    {
+      "path": "data/mixed5b.json",
+      "channels": 1024,
+      "sha256": "fe1d02035b185ba4d6f389d09ce747ab0ddd52a5f4b42615774675260c861969"
+    }
+  ],
+  "downloads": [
+    {
+      "path": "data/conv2d0.json",
+      "status": 200,
+      "bytes": 110644,
+      "content_type": "application/json",
+      "acao": null,
+      "seconds": 5.89
+    },
+    {
+      "path": "data/mixed4c.json",
+      "status": 200,
+      "bytes": 905139,
+      "content_type": "application/json",
+      "acao": null,
+      "seconds": 5.96
+    },
+    {
+      "path": "data/mixed5b.json",
+      "status": 200,
+      "bytes": 1753529,
+      "content_type": "application/json",
+      "acao": null,
+      "seconds": 5.93
+    },
+    {
+      "path": "conn/mixed4c/327.json",
+      "status": 200,
+      "bytes": 655,
+      "content_type": "application/json",
+      "acao": null,
+      "seconds": 5.96
+    },
+    {
+      "path": "sheets/mixed4c/327.jpg",
+      "status": 200,
+      "bytes": 163054,
+      "content_type": "image/jpeg",
+      "acao": null,
+      "seconds": 5.9
+    },
+    {
+      "path": "thumbs/mixed4c/327.jpg",
+      "status": 200,
+      "bytes": 16242,
+      "content_type": "image/jpeg",
+      "acao": null,
+      "seconds": 5.73
+    },
+    {
+      "path": "heat/mixed4c/327.bin",
+      "status": 200,
+      "bytes": 18432,
+      "content_type": "application/octet-stream",
+      "acao": null,
+      "seconds": 5.77
+    },
+    {
+      "path": "fv/positive/mixed4c/327.png",
+      "status": 200,
+      "bytes": 35292,
+      "content_type": "image/png",
+      "acao": null,
+      "seconds": 5.7
+    },
+    {
+      "path": "fv/path_positive/mixed4c/327.png",
+      "status": 200,
+      "bytes": 26805,
+      "content_type": "image/png",
+      "acao": null,
+      "seconds": 5.05
+    },
+    {
+      "path": "fv/diversity/mixed4c/327.png",
+      "status": 200,
+      "bytes": 130587,
+      "content_type": "image/png",
+      "acao": null,
+      "seconds": 5.17
+    },
+    {
+      "path": "fv/negative/mixed4c/327.png",
+      "status": 200,
+      "bytes": 32584,
+      "content_type": "image/png",
+      "acao": null,
+      "seconds": 4.96
+    },
+    {
+      "path": "fv/path_negative/mixed4c/327.png",
+      "status": 200,
+      "bytes": 360,
+      "content_type": "image/png",
+      "acao": null,
+      "seconds": 4.84
+    }
+  ]
+}

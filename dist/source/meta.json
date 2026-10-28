@@ -1,0 +1,268 @@
+{
+ "formatVersion": 1,
+ "title": "InceptionV1 Microscope",
+ "model": "InceptionV1 (GoogLeNet), Lucent pretrained weights",
+ "dataset": "ImageNet train, first 50,000 images (224 px centre crops); negative tail over all 1,281,167 train images",
+ "coordinates": 5804,
+ "layers": [
+  {
+   "name": "conv2d0",
+   "group": "conv",
+   "channels": 64,
+   "grid": 112,
+   "stride": 2,
+   "data": "data/conv2d0.json"
+  },
+  {
+   "name": "conv2d1",
+   "group": "conv",
+   "channels": 64,
+   "grid": 56,
+   "stride": 4,
+   "data": "data/conv2d1.json"
+  },
+  {
+   "name": "conv2d2",
+   "group": "conv",
+   "channels": 192,
+   "grid": 56,
+   "stride": 4,
+   "data": "data/conv2d2.json"
+  },
+  {
+   "name": "mixed3a",
+   "group": "mixed 3",
+   "channels": 256,
+   "grid": 28,
+   "stride": 8,
+   "data": "data/mixed3a.json"
+  },
+  {
+   "name": "mixed3b",
+   "group": "mixed 3",
+   "channels": 480,
+   "grid": 28,
+   "stride": 8,
+   "data": "data/mixed3b.json"
+  },
+  {
+   "name": "mixed4a",
+   "group": "mixed 4",
+   "channels": 508,
+   "grid": 14,
+   "stride": 16,
+   "data": "data/mixed4a.json"
+  },
+  {
+   "name": "mixed4b",
+   "group": "mixed 4",
+   "channels": 512,
+   "grid": 14,
+   "stride": 16,
+   "data": "data/mixed4b.json"
+  },
+  {
+   "name": "mixed4c",
+   "group": "mixed 4",
+   "channels": 512,
+   "grid": 14,
+   "stride": 16,
+   "data": "data/mixed4c.json"
+  },
+  {
+   "name": "mixed4d",
+   "group": "mixed 4",
+   "channels": 528,
+   "grid": 14,
+   "stride": 16,
+   "data": "data/mixed4d.json"
+  },
+  {
+   "name": "mixed4e",
+   "group": "mixed 4",
+   "channels": 832,
+   "grid": 14,
+   "stride": 16,
+   "data": "data/mixed4e.json"
+  },
+  {
+   "name": "mixed5a",
+   "group": "mixed 5",
+   "channels": 832,
+   "grid": 7,
+   "stride": 32,
+   "data": "data/mixed5a.json"
+  },
+  {
+   "name": "mixed5b",
+   "group": "mixed 5",
+   "channels": 1024,
+   "grid": 7,
+   "stride": 32,
+   "data": "data/mixed5b.json"
+  }
+ ],
+ "buckets": [
+  {
+   "id": "top16",
+   "label": "Top 16",
+   "description": "strongest image maxima",
+   "source": "maximum",
+   "count": 16
+  },
+  {
+   "id": "p999",
+   "label": "99.9%",
+   "description": "around the 50th-highest image",
+   "source": "maximum",
+   "count": 8
+  },
+  {
+   "id": "p99",
+   "label": "99%",
+   "description": "around the 500th-highest image",
+   "source": "maximum",
+   "count": 8
+  },
+  {
+   "id": "neg16",
+   "label": "Most negative",
+   "description": "lowest pre-ReLU response anywhere in an image (1.28M images)",
+   "source": "minimum",
+   "count": 16
+  }
+ ],
+ "exampleSheet": {
+  "cell": 112,
+  "columns": 16,
+  "rows": 3,
+  "cells": 48,
+  "positiveCells": 32
+ },
+ "sheets": "sheets/{layer}/{channel}.jpg",
+ "thumbs": "thumbs/{layer}/{channel}.jpg",
+ "heatmaps": {
+  "path": "heat/{layer}/{channel}.bin",
+  "size": 24,
+  "mapsPerNeuron": 32,
+  "dtype": "uint8",
+  "normalization": "each crop's post-ReLU map, cropped like the example and divided by its own maximum"
+ },
+ "connections": {
+  "path": "conn/{layer}/{channel}.json",
+  "score": "mean signed attribution over the top-60 examples; previous: grad x activation into this neuron; next: zero-ablation effect of this neuron on the next layer"
+ },
+ "fvSlots": [
+  "positive",
+  "path_positive",
+  "diversity",
+  "negative",
+  "path_negative"
+ ],
+ "fvPath": "fv/{slot}/{layer}/{channel}.png",
+ "fvCounts": {
+  "mixed4c": [
+   512,
+   512,
+   512,
+   512,
+   512
+  ],
+  "conv2d0": [
+   64,
+   64,
+   64,
+   64,
+   64
+  ],
+  "conv2d1": [
+   64,
+   64,
+   64,
+   64,
+   64
+  ],
+  "conv2d2": [
+   192,
+   192,
+   192,
+   192,
+   192
+  ],
+  "mixed3a": [
+   256,
+   256,
+   256,
+   256,
+   256
+  ],
+  "mixed3b": [
+   480,
+   480,
+   480,
+   480,
+   480
+  ],
+  "mixed4a": [
+   508,
+   508,
+   508,
+   508,
+   508
+  ],
+  "mixed4b": [
+   512,
+   512,
+   512,
+   512,
+   512
+  ],
+  "mixed4d": [
+   528,
+   528,
+   528,
+   528,
+   528
+  ],
+  "mixed4e": [
+   832,
+   832,
+   832,
+   832,
+   832
+  ],
+  "mixed5a": [
+   832,
+   832,
+   832,
+   832,
+   832
+  ],
+  "mixed5b": [
+   1024,
+   1024,
+   1024,
+   1024,
+   1024
+  ]
+ },
+ "source": "public/artifacts/inception-v1-microscope-50k",
+ "generatedAt": "2026-10-13T18:38:28Z",
+ "fvHidden": {
+  "bySlot": {
+   "positive": 138,
+   "path_positive": 218,
+   "diversity": 521,
+   "negative": 94,
+   "path_negative": 147
+  },
+  "total": 1118
+ },
+ "contentScreen": {
+  "featureVis": "CLIP ViT-B/16 person x unsafe screen of every render (diversity tiles one by one), visual review of the candidates (when in doubt, hide); a hidden Positive or Negative hides that side",
+  "examples": "CLIP ViT-B/16 person x unsafe >= 0.8 on each focus crop blanks it; >= 4 of the Top 16 (or 6 of 32 positive) blanked, or a unit the earlier InceptionV1 microscope hid, hides the whole neuron; >= 4 of 16 negative crops blanked hides the negative tail",
+  "hiddenNeurons": 52,
+  "blankedCrops": 2553,
+  "hiddenNegativeTails": 11
+ }
+}

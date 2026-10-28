@@ -1,0 +1,70 @@
+{
+  "audit_date": "2026-10-22",
+  "project": "InceptionV1 Microscope interactive explorer",
+  "source_url": "https://already-clean.goodfire.com/microscope/inceptionv1.html?layer=mixed4c&neuron=327",
+  "sample_method": "Manual transcription of publicly indexed rendered page text; NOT a direct JSON/API export, asset download, or full-corpus extraction.",
+  "layer": "mixed4c",
+  "neuron": 327,
+  "activation_statistics": {
+    "maximum": 2256,
+    "p99_99": 2042,
+    "p99_9": 1706,
+    "p99": 1351,
+    "median": 523,
+    "active_image_percent": 98.7,
+    "pre_relu_minimum": -3162,
+    "pre_relu_p0_1": -2332
+  },
+  "top60_classes": [
+    {"label": "daisy", "count": 5},
+    {"label": "abacus", "count": 3},
+    {"label": "cornet", "count": 2}
+  ],
+  "connections": {
+    "upstream": {
+      "source_layer": "mixed4b",
+      "method": "gradient_x_activation",
+      "positive": [
+        {"neuron": 68, "value": 194, "sample_count": 60},
+        {"neuron": 232, "value": 120, "sample_count": 60},
+        {"neuron": 279, "value": 106, "sample_count": 58},
+        {"neuron": 361, "value": 81.5, "sample_count": 48}
+      ],
+      "negative": [
+        {"neuron": 340, "value": -52.4, "sample_count": 54},
+        {"neuron": 74, "value": -41.4, "sample_count": 59},
+        {"neuron": 15, "value": -35.3, "sample_count": 55},
+        {"neuron": 350, "value": -32.9, "sample_count": 54}
+      ]
+    },
+    "downstream": {
+      "target_layer": "mixed4d",
+      "method": "zero_ablation_effect",
+      "positive": [
+        {"neuron": 389, "value": 10.3, "sample_count": 42},
+        {"neuron": 84, "value": 19.4, "sample_count": 47},
+        {"neuron": 231, "value": 12.3, "sample_count": 47},
+        {"neuron": 28, "value": 19.0, "sample_count": 42}
+      ],
+      "negative": [
+        {"neuron": 485, "value": -5.35, "sample_count": 34},
+        {"neuron": 52, "value": -8.96, "sample_count": 48},
+        {"neuron": 4, "value": -9.79, "sample_count": 42},
+        {"neuron": 62, "value": -8.44, "sample_count": 45}
+      ]
+    }
+  },
+  "feature_visualizations": {
+    "variant_labels_observed": ["Positive", "Path-guided positive", "Diversity 2x2", "Negative", "Path-guided negative"],
+    "asset_urls_verified": false,
+    "asset_bytes_downloaded": false
+  },
+  "dataset_examples": {
+    "top_16_labels_and_values_observed": true,
+    "asset_urls_verified": false,
+    "asset_bytes_downloaded": false
+  },
+  "full_adjacent_relation_matrix_available": "unverified",
+  "original_rank_order_formula": "unverified",
+  "sample_count_meaning": "unverified"
+}
