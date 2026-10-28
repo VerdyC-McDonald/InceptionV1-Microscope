@@ -64,6 +64,7 @@ def main():
     parser.add_argument('--group', choices=['dist', 'original-source'], required=True)
     parser.add_argument('--commit', action='store_true')
     args = parser.parse_args()
+    print('Loading pinned audit indexes; repository copies are reused after verification.', flush=True)
     records = [r for r in load_snapshot(restore) if r[0].startswith(args.group + '/')]
     failures = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=64) as pool:

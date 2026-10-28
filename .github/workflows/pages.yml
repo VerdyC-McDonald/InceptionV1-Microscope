@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths: [dist/**, scripts/verify-pages.py, .github/workflows/pages.yml]
   workflow_dispatch:
+  workflow_run:
+    workflows: [Import complete Site snapshot]
+    types: [completed]
 permissions:
   contents: read
   pages: write
@@ -13,17 +16,33 @@ concurrency:
   cancel-in-progress: false
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - run: python3 scripts/verify-pages.py
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+        with:
+          ref: main
+      - name: Check whether the initial import is ready
+        id: ready
+        run: |
+          if [ -f dist/app.js ] && [ -f dist/source/index.json.gz ]; then
+            echo 'complete=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'complete=false' >> "$GITHUB_OUTPUT"
+            echo 'Waiting for the initial Site snapshot import.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - if: steps.ready.outputs.complete == 'true'
+        run: python3 scripts/verify-pages.py
+      - if: steps.ready.outputs.complete == 'true'
+        uses: actions/configure-pages@v5
+      - if: steps.ready.outputs.complete == 'true'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
       - name: Deploy
+        if: steps.ready.outputs.complete == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
