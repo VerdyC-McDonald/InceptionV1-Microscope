@@ -1,0 +1,37 @@
+name: Import complete Site snapshot
+on:
+  push:
+    branches: [main]
+    paths:
+      - migration/**
+      - scripts/import-snapshot.py
+      - .github/workflows/import-snapshot.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: import-snapshot
+  cancel-in-progress: false
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure migration commit identity
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Import and commit the complete runnable website
+        run: python3 scripts/import-snapshot.py --group dist --commit
+      - name: Validate the website
+        run: |
+          python3 scripts/verify-pages.py
+          node scripts/verify-source.mjs
+          node --check dist/app.js
+      - name: Import and commit original data in bounded Git pushes
+        run: python3 scripts/import-snapshot.py --group original-source --commit
+      - name: Record verified completion
+        run: |
+          echo 'All website files and original data match the SHA-256 snapshot.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Enable Settings → Pages → GitHub Actions, then run Deploy GitHub Pages.' >> "$GITHUB_STEP_SUMMARY"

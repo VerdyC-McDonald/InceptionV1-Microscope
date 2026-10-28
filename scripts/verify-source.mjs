@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import {gunzipSync} from 'node:zlib';
+import assert from 'node:assert/strict';
+import {normalizeNeuron,normalizeConnections} from '../dist/source-data.js';
+const root=new URL('../dist/source/',import.meta.url),read=p=>JSON.parse(fs.existsSync(new URL(p,root))?fs.readFileSync(new URL(p,root),'utf8'):gunzipSync(fs.readFileSync(new URL(p+'.gz',root))).toString());
+const meta=read('meta.json'),index=read('index.json'),connections=read('connections.json');let count=0,hidden=0;
+for(const layer of meta.layers){const data=read(layer.data);assert.equal(data.channels,layer.channels);assert.equal(data.neurons.length,layer.channels);for(const [i,raw] of data.neurons.entries()){assert.equal(raw.c,i);const n=normalizeNeuron(layer.name,raw,connections[layer.name+':'+i]);assert.equal(n.activation_statistics.maximum,raw.s.max);assert.equal(n.activation_statistics.active_image_percent,raw.s.active*100);assert.equal(n.raw,raw);assert.equal(n.connections===null,!connections[layer.name+':'+i]);assert.equal(raw.b.length,4);assert.equal(raw.fv.length,5);hidden+=[...raw.fv].filter(x=>x==='h').length;count++;}}
+assert.equal(count,5804);assert.equal(hidden,1118);
+const c=normalizeConnections(connections['mixed4c:327']);assert.equal(c.upstream.positive.length,4);assert.equal(c.downstream.positive[0].value,10.34);assert.equal(c.downstream.positive[1].value,19.36);assert.equal(c.upstream.positive[0].example_count,60);
+assert.equal(normalizeConnections(connections['conv2d0:0']).upstream.positive.length,0);assert.equal(normalizeConnections(connections['mixed5b:0']).downstream.positive.length,0);
+assert(!index.assets.includes('fv/path_negative/mixed4c/327.png'));
+for(const p of index.assets)assert(fs.statSync(new URL(index.asset_paths?.[p]||p,root)).size>0);
+console.log(`PASS: ${count} source neurons; ${hidden} hidden FV states; 3 connection adapters; source order, precision, boundaries and local asset paths.`);
+const app=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');
+const helpers=app.slice(app.indexOf('const variantNames='),app.indexOf('function groupMarkup('));
+const sourceLayers=new Map(meta.layers.map(l=>[l.name,read(l.data)])),state={layer:'mixed4c',neuron:327};
+const factory=new Function('sourceLayers','state','sourceMeta','assetSet','esc','placeholder','sourceIndex',helpers+';return {featureVariants,exampleBucket,neuronPreview};');
+const helpersApi=factory(sourceLayers,state,meta,new Set(index.assets),x=>String(x).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('"','&quot;'),()=>'<div>图片待导入</div>',index);
+const n=normalizeNeuron('mixed4c',sourceLayers.get('mixed4c').neurons[327],connections['mixed4c:327']);
+const variants=helpersApi.featureVariants(n);assert.equal((variants.match(/class="source-image"/g)||[]).length,4);assert(variants.includes('原站已隐藏'));assert(!variants.includes('source/fv/path_negative'));
+assert.equal([0,1,2,3].map(i=>helpersApi.exampleBucket(n,i)).join('').match(/<figure>/g).length,48);
+const hiddenRecord=[...sourceLayers.values()].flatMap(l=>l.neurons).find(n=>n.hid);assert(helpersApi.exampleBucket({raw:hiddenRecord},0).includes('原站已隐藏'));
+assert(helpersApi.neuronPreview('mixed4c',327,'dataset').includes('source/'+(index.asset_paths?.['thumbs/mixed4c/327.jpg']||'thumbs/mixed4c/327.jpg')));
+console.log('PASS: 4 real feature variants + 1 hidden state, 48 correct sprite slots, hidden-neuron masking and Dataset Top-4 preview.');
